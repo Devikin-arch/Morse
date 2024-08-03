@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Morse Code Encoder/Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, textarea, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Morse Code Encoder/Decoder</h1>
+    <textarea id="inputText" placeholder="Enter text to encode/decode" rows="4"></textarea>
+    <button onclick="encodeMorse()">Encode to Morse</button>
+    <button onclick="decodeMorse()">Decode from Morse</button>
+    <textarea id="outputText" placeholder="Output" rows="4" readonly></textarea>
+
+    <script>
+        const MORSE_CODE_DICT = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+            'Y': '-.--', 'Z': '--..', '1': '.----', '2': '..---', '3': '...--',
+            '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
+            '9': '----.', '0': '-----', ', ': '--..--', '.': '.-.-.-', '?': '..--..',
+            '/': '-..-.', '-': '-....-', '(': '-.--.', ')': '-.--.-', ' ': '/'
+        };
+
+        function encodeMorse() {
+            const text = document.getElementById('inputText').value.toUpperCase();
+            let encoded = '';
+            for (let char of text) {
+                if (MORSE_CODE_DICT[char]) {
+                    encoded += MORSE_CODE_DICT[char] + ' ';
+                }
+            }
+            document.getElementById('outputText').value = encoded.trim();
+        }
+
+        function decodeMorse() {
+            const text = document.getElementById('inputText').value.trim();
+            const morseArray = text.split(' ');
+            let decoded = '';
+            for (let morseChar of morseArray) {
+                if (morseChar === '/') {
+                    decoded += ' ';
+                } else {
+                    decoded += Object.keys(MORSE_CODE_DICT).find(key => MORSE_CODE_DICT[key] === morseChar);
+                }
+            }
+            document.getElementById('outputText').value = decoded;
+        }
+    </script>
+</body>
+</html>
